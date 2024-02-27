@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devtools Network</title>
+</head>
+
+<body>
+
+    <h1>Chrome Devtools network tab</h1>
+    <h2>User Emails</h2>
+    <button onclick="loadEmail()">User Emails</button>
+    <ul id="email-container">
+
+    </ul>
+    <h2>User Names</h2>
+    <button onclick="loadUsrName()">User Names</button>
+    <ul id="username-container">
+    </ul>
+    <h2>Create a Post Here</h2>
+    <button onclick="createPost()">Create a Post</button>
+    <h2>Delete a Post Here</h2>
+    <button onclick="deletePost()">Delete a Post</button>
+    <h2>Patch a Post Here</h2>
+    <button onclick="patchAPost()">Patch a Post</button>
+    <script>
+        function loadEmail() {
+            fetch('https://jsonplaceholder.typicode.com/users')
+                .then(res => res.json())
+                .then(data => displayEmail(data))
+        }
+        function displayEmail(emails) {
+            const emailContainer = document.getElementById('email-container');
+            for (const userEmail of emails) {
+                const createLi = document.createElement('li');
+                createLi.innerText = userEmail.email;
+                emailContainer.appendChild(createLi);
+            }
+        }
+        // User Names
+        function loadUsrName() {
+            fetch('https://jsonplaceholder.typicode.com/users')
+                .then(res => res.json())
+                .then(data => displayUsrNames(data))
+        }
+        function displayUsrNames(usernames) {
+            const userNameContainer = document.getElementById('username-container');
+            for (const userName of usernames) {
+                const createLi = document.createElement('li');
+                createLi.innerText = userName.name;
+                userNameContainer.appendChild(createLi);
+            }
+        }
+        // Delete Method
+        function deletePost() {
+            fetch('https://jsonplaceholder.typicode.com/posts/1', {
+                method: 'DELETE',
+            });
+        }
+        function patchAPost() {
+            fetch('https://jsonplaceholder.typicode.com/posts/1', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    title: 'foo',
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+        }
+        function createPost() {
+            fetch('https://jsonplaceholder.typicode.com/posts/1', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    title: 'foo',
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+        }
+    </script>
+</body>
+
+</html>
